@@ -5,6 +5,7 @@ import com.nestdigital.employeeApp.Model.EmployeeModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -24,5 +25,13 @@ public class EmployeeController {
     public List<EmployeeModel> viewEmployee(){
     return (List<EmployeeModel>) dao.findAll();
 }
+
+    @CrossOrigin(origins = "*")
+    @Transactional
+    @PostMapping(path = "/deleteEmployee",consumes = "application/json", produces = "application/json")
+    public String deleteFaculty(@RequestBody EmployeeModel faculty) {
+        dao.deleteEmployeeById(faculty.getId());
+        return "{status:'Success'}";
+    }
 }
 
